@@ -16,12 +16,15 @@ const LoginForm = ({ userType, handleBack, handleLogin }) => {
 
         userList = JSON.parse(userList);
         userExist = userList.filter(item => item._id === userid)
-        userExist.length > 0 &&
-            handleLogin(userExist[0])
+        const currentX = parseInt(Math.random() * 100);
+        const currentY = parseInt(Math.random() * 100);
+        userExist.length > 0 ?
+            handleLogin({ ...userExist[0], currentX, currentY })
+            : alert(`${userType} not found`)
     }
 
     return (
-        <div className="row">
+        <div className="col">
             <h2>Login {userType}</h2>
             <label>{userType} Id</label>
             <input className="inputbox" type={'text'} placeholder={`Enter ${userType} id here..`} value={userid} onChange={e => setUserId(e.target.value)} />

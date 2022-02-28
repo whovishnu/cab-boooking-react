@@ -15,7 +15,8 @@ const RegisterForm = ({ userType, handleBack }) => {
                 {
                     _id: userid,
                     _name: userName,
-                    cab_number: cabNumber
+                    cab_number: cabNumber,
+                    is_online: false
                 }
             )
 
@@ -41,7 +42,7 @@ const RegisterForm = ({ userType, handleBack }) => {
     }
 
     return (
-        <div className="row">
+        <div className="col">
             <h2>Register {userType}</h2>
             <label>{userType} Id</label>
             <input className="inputbox" type={'text'} placeholder={`Enter ${userType} id here..`} value={userid} onChange={e => setUserId(e.target.value)} />
