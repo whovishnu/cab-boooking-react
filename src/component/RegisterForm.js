@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { getDrives, getUsers, setDrives, setUsers } from "../util/CommonFunction"
 
 
 const RegisterForm = ({ userType, handleBack }) => {
@@ -8,32 +9,21 @@ const RegisterForm = ({ userType, handleBack }) => {
 
     const handleRegisterClick = () => {
         if (userType === 'Driver') {
-            let deriver = localStorage.getItem('drivers') || '[]';
-            deriver = JSON.parse(deriver);
-
-            deriver.push(
-                {
-                    _id: userid,
-                    _name: userName,
-                    cab_number: cabNumber,
-                    is_online: false
-                }
-            )
-
-            localStorage.setItem('drivers', JSON.stringify(deriver))
+            let deriver = getDrives()
+            deriver.push({
+                _id: userid,
+                _name: userName,
+                cab_number: cabNumber,
+                is_online: false
+            })
+            setDrives(deriver)
         } else {
-            let users = localStorage.getItem('users') || '[]';
-            console.log(localStorage.getItem('users'), users)
-            users = JSON.parse(users);
-
-            users.push(
-                {
-                    _id: userid,
-                    _name: userName,
-                }
-            )
-
-            localStorage.setItem('users', JSON.stringify(users))
+            let users = getUsers();
+            users.push({
+                _id: userid,
+                _name: userName,
+            })
+            setUsers(users)
         }
         alert(`${userType} Register Successfully!!`)
         setUserId('');

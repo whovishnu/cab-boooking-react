@@ -1,18 +1,14 @@
 import { useState } from "react"
+import { getDrives, getRandomXY, setDrives } from "../../util/CommonFunction";
 
 
 const DriverHome = ({ user, handleLogout }) => {
     const [isON, setIsON] = useState(true);
 
     const handleClick = () => {
-        let currentX = 0, currentY = 0;
 
-        if (!isON) {
-            currentX = parseInt(Math.random() * 100);
-            currentY = parseInt(Math.random() * 100);
-        }
-        let deriver = localStorage.getItem('drivers') || '[]';
-        deriver = JSON.parse(deriver);
+        const { currentX, currentY } = getRandomXY();
+        let deriver = getDrives()
 
         deriver = deriver.map(item => {
             if (item._id === user._id) {
@@ -26,7 +22,8 @@ const DriverHome = ({ user, handleLogout }) => {
                 return item
             }
         })
-        localStorage.setItem('drivers', JSON.stringify(deriver))
+        
+        setDrives(deriver)
         setIsON(!isON)
     }
 

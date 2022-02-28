@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { getDrives, getRandomXY, getUsers } from "../util/CommonFunction";
 
 
 const LoginForm = ({ userType, handleBack, handleLogin }) => {
@@ -6,18 +7,11 @@ const LoginForm = ({ userType, handleBack, handleLogin }) => {
 
     const handleClick = () => {
         let userExist = {};
-        let userList = [];
+        let userList = userType === 'Driver' ? getDrives() : getUsers()
+        const { currentX, currentY } = getRandomXY();
 
-        if (userType === 'Driver') {
-            userList = localStorage.getItem('drivers') || '[]';
-        } else {
-            userList = localStorage.getItem('users') || '[]';
-        }
-
-        userList = JSON.parse(userList);
         userExist = userList.filter(item => item._id === userid)
-        const currentX = parseInt(Math.random() * 100);
-        const currentY = parseInt(Math.random() * 100);
+        
         userExist.length > 0 ?
             handleLogin({ ...userExist[0], currentX, currentY })
             : alert(`${userType} not found`)

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { calculateDistance, getDrives } from "../../util/CommonFunction"
 
 
 const UserHome = ({ user, handleLogout }) => {
@@ -9,20 +10,14 @@ const UserHome = ({ user, handleLogout }) => {
 
     const SearchCab = () => {
         if (selectDestinationX !== "" && selectDestinationY !== "") {
-            let DestinationDistance = Math.sqrt(
-                (user.currentX - selectDestinationX) * (user.currentX - selectDestinationX)
-                + (user.currentY - selectDestinationY) * (user.currentY - selectDestinationY))
-            let deriver = localStorage.getItem('drivers') || '[]';
-            deriver = JSON.parse(deriver);
+            let DestinationDistance = calculateDistance(user.currentX, selectDestinationX, user.currentY, selectDestinationY)
+            let deriver = getDrives()
 
             deriver = deriver.filter(item => item.is_online)
 
             if (deriver.length) {
                 deriver = deriver.map(item => {
-                    let distance = Math.sqrt(
-                        (item.currentX - selectDestinationX) * (item.currentX - selectDestinationX)
-                        + (item.currentY - selectDestinationY) * (item.currentY - selectDestinationY))
-
+                    let distance = calculateDistance(item.currentX, selectDestinationX, item.currentY, selectDestinationY)
                     return ({ ...item, distance: parseInt(distance) })
                 })
 
